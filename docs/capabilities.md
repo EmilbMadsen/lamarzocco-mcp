@@ -3,9 +3,9 @@
 What each La Marzocco machine returns from pylamarzocco's cloud client. lamarzocco-mcp wraps these
 methods 1:1 as MCP tools. WebSocket and Bluetooth are out of scope.
 
-Filled in from `scripts/discover.py` runs. To add your model, see [CONTRIBUTING](../CONTRIBUTING.md)
-(coming soon): run discovery, anonymize the dump with `scripts/anonymize.py`, and add a column and
-a section below.
+Filled in from `scripts/discover.py` runs. To add your model, follow
+[CONTRIBUTING](../CONTRIBUTING.md#adding-your-machine-model): run discovery, anonymize the dump
+with `scripts/anonymize.py`, and add a column and a section below.
 
 Legend: ✅ works · ⚠️ partial / caveat · ❌ not available · ❔ not tested yet
 

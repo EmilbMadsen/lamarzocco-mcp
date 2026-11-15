@@ -103,6 +103,11 @@ To enable them in Claude Desktop, add an `env` block to the server entry:
 }
 ```
 
+## Contributing
+
+Have a different La Marzocco model? Mapping what it returns takes about ten minutes; see
+[CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Credits
 
 - [pylamarzocco](https://github.com/zweckj/pylamarzocco) by Josef Zweck (MIT)

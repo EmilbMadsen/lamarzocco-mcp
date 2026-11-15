@@ -1,0 +1,53 @@
+name: New machine model
+description: Report what the tools return for a model not yet in docs/capabilities.md.
+labels: [new model]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! A pull request with anonymized fixtures is even better: see
+        [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md#adding-your-machine-model).
+
+        **Do not paste raw output from `scripts/discover.py`.** It contains your serial number,
+        machine name and wifi name. Run `scripts/anonymize.py` first and check the result.
+  - type: input
+    id: model
+    attributes:
+      label: Machine model
+      placeholder: e.g. Linea Mini R, GS3 AV
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Firmware versions
+      description: From get_machine_settings (`actualFirmwares`).
+      placeholder: e.g. machine v1.17, gateway v7.5.3
+  - type: textarea
+    id: works
+    attributes:
+      label: What works
+      description: Which tools returned useful data.
+      placeholder: |
+        - get_last_coffees: 15 shots, extractionSeconds present
+        - get_machine_status: widgets CMMachineStatus, CMCoffeeBoiler, ...
+    validations:
+      required: true
+  - type: textarea
+    id: differences
+    attributes:
+      label: What fails or differs from the Linea Micra
+      description: Errors, missing fields, steam temperature instead of level, other pre-brew modes, ...
+  - type: textarea
+    id: anonymized
+    attributes:
+      label: Anonymized output (optional)
+      description: Output of scripts/anonymize.py only.
+      render: json
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: Anything pasted here went through scripts/anonymize.py and I checked it by eye.
+          required: true
