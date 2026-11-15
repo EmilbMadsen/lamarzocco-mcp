@@ -18,7 +18,7 @@ body:
     id: tool
     attributes:
       label: Tool or script
-      placeholder: e.g. get_last_coffees, set_steam, scripts/setup_credentials.py
+      placeholder: e.g. get_last_coffees, set_steam, lamarzocco-mcp setup
   - type: textarea
     id: error
     attributes:

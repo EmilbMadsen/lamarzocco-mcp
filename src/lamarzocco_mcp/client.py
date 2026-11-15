@@ -149,7 +149,7 @@ class LaMarzoccoService:
             # Drop the client, so changed credentials are picked up on the next call.
             self._client = None
             raise LaMarzoccoError(
-                f"La Marzocco rejected the login ({err}). Run scripts/setup_credentials.py again."
+                f"La Marzocco rejected the login ({err}). Run `lamarzocco-mcp setup` again."
             ) from err
         except PolicyAcceptanceRequired as err:
             raise LaMarzoccoError(

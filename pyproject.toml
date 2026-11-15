@@ -7,12 +7,28 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Emil Madsen" }]
 requires-python = ">=3.13"
+keywords = ["mcp", "model-context-protocol", "la-marzocco", "espresso", "claude", "pylamarzocco"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Home Automation",
+    "Typing :: Typed",
+]
 dependencies = [
     "keyring>=25.7.0",
-    "mcp[cli]>=2.3.0",
+    "mcp>=2.3.0",
     "pylamarzocco>=2.5,<2.6",
     "python-dotenv>=1.2.4",
 ]
+
+[project.urls]
+Homepage = "https://github.com/EmilbMadsen/lamarzocco-mcp"
+Issues = "https://github.com/EmilbMadsen/lamarzocco-mcp/issues"
+Changelog = "https://github.com/EmilbMadsen/lamarzocco-mcp/releases"
 
 [project.scripts]
 lamarzocco-mcp = "lamarzocco_mcp.server:main"

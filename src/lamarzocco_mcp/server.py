@@ -9,7 +9,9 @@ LAMARZOCCO_MCP_ALLOW_WRITE=1 is set in the server's environment.
 
 from __future__ import annotations
 
+import argparse
 import os
+import sys
 from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -21,9 +23,10 @@ from mcp.types import ToolAnnotations
 from pydantic import Field
 from pylamarzocco import LaMarzoccoCloudClient
 
-from . import write_tools
+from . import __version__, write_tools
 from .client import LaMarzoccoError, LaMarzoccoService
 from .presentation import present
+from .setup_cli import run_setup
 
 service = LaMarzoccoService()
 
@@ -54,7 +57,7 @@ async def _lifespan(_: MCPServer[None]) -> AsyncIterator[None]:
 
 server: MCPServer[None] = MCPServer(
     name="lamarzocco",
-    version="0.1.0",
+    version=__version__,
     instructions=_COMMON_INSTRUCTIONS
     + (_WRITE_INSTRUCTIONS if ALLOW_WRITE else _READ_ONLY_INSTRUCTIONS),
     lifespan=_lifespan,
@@ -196,8 +199,25 @@ if ALLOW_WRITE:
     write_tools.register(server, lambda: service)
 
 
-def main() -> None:
-    """Entry point for the ``lamarzocco-mcp`` console script."""
+def main(argv: list[str] | None = None) -> None:
+    """Entry point for the ``lamarzocco-mcp`` console script.
+
+    Without arguments it runs the MCP server over stdio (what MCP clients start). ``setup``
+    stores the La Marzocco login in the keyring.
+    """
+    parser = argparse.ArgumentParser(
+        prog="lamarzocco-mcp",
+        description="Unofficial MCP server for La Marzocco espresso machines. "
+        "Run without arguments to serve MCP over stdio.",
+    )
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
+    commands = parser.add_subparsers(dest="command")
+    setup = commands.add_parser("setup", help="store your La Marzocco login in the keyring")
+    setup.add_argument("--delete", action="store_true", help="remove the stored login instead")
+    args = parser.parse_args(argv)
+
+    if args.command == "setup":
+        sys.exit(run_setup(delete=args.delete))
     server.run("stdio")
 
 

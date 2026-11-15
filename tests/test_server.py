@@ -134,7 +134,7 @@ async def test_unparseable_response_still_returns_raw(harness: Harness) -> None:
 @pytest.mark.parametrize(
     ("error", "message"),
     [
-        (AuthFail("Invalid username or password"), "setup_credentials.py"),
+        (AuthFail("Invalid username or password"), "lamarzocco-mcp setup"),
         (PolicyAcceptanceRequired("policy"), "privacy policy"),
         (RequestNotSuccessful("500"), "API returned an error"),
         (TimeoutError(), "Could not reach"),

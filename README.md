@@ -3,61 +3,69 @@
 > **Unofficial.** This project is not affiliated with, endorsed by, or supported by La Marzocco.
 
 An [MCP](https://modelcontextprotocol.io) server that lets Claude and other MCP clients read the
-status, settings and shot data of La Marzocco home espresso machines. It runs locally over stdio
-and is built on [pylamarzocco](https://github.com/zweckj/pylamarzocco).
+status, settings and shot data of La Marzocco home espresso machines, and optionally change a
+few settings. It runs locally over stdio and is built on
+[pylamarzocco](https://github.com/zweckj/pylamarzocco).
 
-**Status:** early work in progress. See [docs/capabilities.md](docs/capabilities.md) for what the API exposes.
+Ask things like "what was my last shot?", "is the machine on?" or, with write tools enabled,
+"turn on the machine".
 
 ## Supported machines
 
-Developed and tested on a Linea Micra. Other models supported by pylamarzocco should work;
-see [docs/capabilities.md](docs/capabilities.md) for what has been verified per model.
+Developed and tested on a Linea Micra. Other models supported by pylamarzocco should work; see
+[docs/capabilities.md](https://github.com/EmilbMadsen/lamarzocco-mcp/blob/main/docs/capabilities.md)
+for what has been verified per model.
 
 ## Requirements
 
-- Python 3.13 and [uv](https://docs.astral.sh/uv/)
+- [uv](https://docs.astral.sh/uv/) (it installs Python 3.13 for you if needed)
 - A La Marzocco account that uses a regular email/password login (not Google or Apple sign-in)
+- The machine connected to wifi and set up in La Marzocco's app
 
-## Setup (development)
+## Setup
+
+Store your La Marzocco login in the system keyring (macOS Keychain, Windows Credential Locker,
+or the Secret Service on Linux). Nothing is written to disk:
 
 ```bash
-uv sync
-uv run python scripts/setup_credentials.py
+uvx lamarzocco-mcp setup
 ```
 
-Credentials and the installation key are stored in your system keyring. Only the machine's
-serial number goes in `.env`.
+It signs in, lists your machines and saves the one to use. Run it again to change account, or
+`uvx lamarzocco-mcp setup --delete` to remove everything. On macOS, the first time the server reads
+the keychain you may be asked to allow it; choose "Always Allow".
 
 ## Use with Claude
 
 The server runs over stdio: your MCP client starts it when needed, so there is nothing to keep
-running. Replace the path with where you cloned the repo.
+running.
 
 **Claude Code:**
 
 ```bash
-claude mcp add --scope user lamarzocco -- uv --directory /path/to/lamarzocco-mcp run lamarzocco-mcp
+claude mcp add --scope user lamarzocco -- uvx lamarzocco-mcp
 ```
 
-**Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`), then
-restart Claude Desktop:
+**Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS),
+then restart Claude Desktop:
 
 ```json
 {
   "mcpServers": {
     "lamarzocco": {
-      "command": "uv",
-      "args": ["--directory", "/path/to/lamarzocco-mcp", "run", "lamarzocco-mcp"]
+      "command": "uvx",
+      "args": ["lamarzocco-mcp"]
     }
   }
 }
 ```
 
-Then ask, for example, "what was my last shot?".
+If Claude Desktop cannot find `uvx`, use its full path (`which uvx`, e.g.
+`/opt/homebrew/bin/uvx`).
 
 ## Tools
 
-All tools are read-only. Each wraps one method of pylamarzocco's `LaMarzoccoCloudClient`.
+Read-only by default. Each tool wraps one method of pylamarzocco's `LaMarzoccoCloudClient`.
 
 | Tool | Returns |
 |---|---|
@@ -73,6 +81,9 @@ All tools are read-only. Each wraps one method of pylamarzocco's `LaMarzoccoClou
 
 Responses are La Marzocco's raw JSON with three changes: timestamps become ISO 8601 in local time,
 the Bluetooth token and wifi name are redacted, and image/tutorial URLs are dropped.
+
+Shot times (`extractionSeconds`) are pump time measured by the machine, usually a few seconds
+shorter than a scale's timer.
 
 ### Optional write tools
 
@@ -97,16 +108,35 @@ To enable them in Claude Desktop, add an `env` block to the server entry:
 
 ```json
 "lamarzocco": {
-  "command": "uv",
-  "args": ["--directory", "/path/to/lamarzocco-mcp", "run", "lamarzocco-mcp"],
+  "command": "uvx",
+  "args": ["lamarzocco-mcp"],
   "env": { "LAMARZOCCO_MCP_ALLOW_WRITE": "1" }
 }
 ```
 
+In Claude Code: `claude mcp add --scope user -e LAMARZOCCO_MCP_ALLOW_WRITE=1 lamarzocco -- uvx lamarzocco-mcp`.
+
+## Configuration
+
+| Variable | Effect |
+|---|---|
+| `LAMARZOCCO_MCP_ALLOW_WRITE=1` | Registers the write tools |
+| `LAMARZOCCO_SERIAL` | Use this machine instead of the one chosen in `setup` |
+
+With several machines on the account, tools also take an optional `serial_number`.
+
+## Security
+
+- Your login and installation key are stored only in the system keyring.
+- The server runs only locally over stdio; there is no network listener.
+- Read-only unless you enable write tools.
+- The server uses La Marzocco's undocumented cloud API through pylamarzocco, the same API their
+  app uses. It can stop working if La Marzocco changes it.
+
 ## Contributing
 
 Have a different La Marzocco model? Mapping what it returns takes about ten minutes; see
-[CONTRIBUTING.md](CONTRIBUTING.md).
+[CONTRIBUTING.md](https://github.com/EmilbMadsen/lamarzocco-mcp/blob/main/CONTRIBUTING.md).
 
 ## Credits
 

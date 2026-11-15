@@ -1,39 +1,33 @@
-"""One-time setup: store La Marzocco credentials in the system keyring.
+"""``lamarzocco-mcp setup``: store La Marzocco credentials in the system keyring.
 
-Asks for username and password, generates and registers an installation key, verifies the login
-by listing machines, and writes the chosen machine's serial number to `.env`.
-
-    uv run python scripts/setup_credentials.py
-    uv run python scripts/setup_credentials.py --delete   # remove stored credentials
+Asks for email and password, generates and registers an installation key, verifies the login by
+listing machines, and saves everything, including the chosen machine's serial number, in the
+keyring. Nothing is written to disk.
 """
 
 from __future__ import annotations
 
-import argparse
 import asyncio
 import getpass
 import sys
 import uuid
-from pathlib import Path
 
 from aiohttp import ClientSession
-from dotenv import set_key
 from pylamarzocco import LaMarzoccoCloudClient
 from pylamarzocco.exceptions import AuthFail, PolicyAcceptanceRequired, RequestNotSuccessful
 from pylamarzocco.util import generate_installation_key
 
-from lamarzocco_mcp.credentials import (
-    SERIAL_ENV_VAR,
+from .credentials import (
     Credentials,
     delete_credentials,
     save_credentials,
+    save_serial_number,
 )
 
-ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
 
-
-async def setup() -> int:
+async def _setup() -> int:
     print("La Marzocco login (email + password; Google/Apple sign-in is not supported).")
+    print("Your password is stored only in the system keyring.\n")
     username = input("Email: ").strip()
     password = getpass.getpass("Password: ")
     if not username or not password:
@@ -50,7 +44,7 @@ async def setup() -> int:
             client=session,
         )
         try:
-            print("Registering installation key ...")
+            print("Registering this installation with La Marzocco ...")
             await client.async_register_client()
             print("Signing in and listing machines ...")
             things = await client.list_things()
@@ -59,7 +53,7 @@ async def setup() -> int:
             return 1
         except PolicyAcceptanceRequired:
             print(
-                "You must accept La Marzocco's latest privacy policy in their app first.",
+                "Accept La Marzocco's latest privacy policy in their app first.",
                 file=sys.stderr,
             )
             return 1
@@ -70,7 +64,7 @@ async def setup() -> int:
     save_credentials(
         Credentials(username=username, password=password, installation_key=installation_key)
     )
-    print("Credentials and installation key saved to the system keyring.")
+    print("Login and installation key saved to the system keyring.")
 
     if not things:
         print("No machines found on this account.")
@@ -82,26 +76,21 @@ async def setup() -> int:
 
     choice = 1
     if len(things) > 1:
-        raw = input(f"Which machine should be used? [1-{len(things)}]: ").strip()
+        raw = input(f"Which machine should be the default? [1-{len(things)}]: ").strip()
         choice = int(raw) if raw.isdigit() and 1 <= int(raw) <= len(things) else 1
 
-    serial = things[choice - 1].serial_number
-    ENV_FILE.touch(exist_ok=True)
-    set_key(str(ENV_FILE), SERIAL_ENV_VAR, serial)
-    print(f"Wrote {SERIAL_ENV_VAR} to {ENV_FILE.name}.")
+    save_serial_number(things[choice - 1].serial_number)
+    print(f"Default machine: '{things[choice - 1].name}'. Setup complete.")
     return 0
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--delete", action="store_true", help="remove stored credentials")
-    args = parser.parse_args()
-    if args.delete:
+def run_setup(delete: bool = False) -> int:
+    if delete:
         delete_credentials()
-        print("Removed La Marzocco credentials from the keyring.")
+        print("Removed La Marzocco credentials and serial number from the keyring.")
         return 0
-    return asyncio.run(setup())
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        return asyncio.run(_setup())
+    except (KeyboardInterrupt, EOFError):
+        print("\nCancelled. Nothing was saved.")
+        return 130

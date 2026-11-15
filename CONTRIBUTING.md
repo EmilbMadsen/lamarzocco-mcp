@@ -44,7 +44,7 @@ and your account must use email and password (not Google or Apple sign-in).
 1. **Store your login** in the system keyring. Nothing is written to the repo:
 
    ```bash
-   uv run python scripts/setup_credentials.py
+   uv run lamarzocco-mcp setup
    ```
 
 2. **Record what the cloud API returns** for your machine. This only reads; it changes nothing:
@@ -82,3 +82,16 @@ describe what you found, without raw output.
 - Add or update tests for behaviour changes.
 - Never include credentials, raw dumps, serial numbers or other personal data, including in
   screenshots and logs.
+
+## Releasing (maintainers)
+
+Releases go to PyPI from GitHub Actions with
+[trusted publishing](https://docs.pypi.org/trusted-publishers/), so no API token exists anywhere.
+
+1. Bump `version` in `pyproject.toml` (or `uv version --bump patch`) and commit.
+2. Tag and push: `git tag v0.1.1 && git push origin v0.1.1`.
+3. `.github/workflows/release.yml` runs the checks, verifies the tag matches the version, builds,
+   publishes to PyPI and creates a GitHub release.
+
+One-time setup: on pypi.org, add a trusted publisher for project `lamarzocco-mcp` with owner
+`EmilbMadsen`, repository `lamarzocco-mcp`, workflow `release.yml` and environment `pypi`.
