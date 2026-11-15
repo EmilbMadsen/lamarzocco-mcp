@@ -3,12 +3,13 @@
 One tool per read method of ``LaMarzoccoCloudClient``. The server adds no logic of its own: it
 calls the method, takes the raw JSON response and passes it through ``presentation.present``.
 
-Read-only. pylamarzocco can also control the machine (power, steam, temperatures), but none of
-that is exposed here.
+Read-only by default. Seven write tools (see ``write_tools``) are added only when
+LAMARZOCCO_MCP_ALLOW_WRITE=1 is set in the server's environment.
 """
 
 from __future__ import annotations
 
+import os
 from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -20,10 +21,27 @@ from mcp.types import ToolAnnotations
 from pydantic import Field
 from pylamarzocco import LaMarzoccoCloudClient
 
+from . import write_tools
 from .client import LaMarzoccoError, LaMarzoccoService
 from .presentation import present
 
 service = LaMarzoccoService()
+
+ALLOW_WRITE = os.environ.get(write_tools.ALLOW_WRITE_ENV, "").strip() == "1"
+
+_COMMON_INSTRUCTIONS = (
+    "Access to La Marzocco home espresso machines through La Marzocco's cloud "
+    "(unofficial, not affiliated with La Marzocco). Times are ISO 8601 in the user's local "
+    "time. Shot durations (extractionSeconds) are pump time as measured by the machine, "
+    "which is usually a few seconds shorter than a scale's timer."
+)
+_READ_ONLY_INSTRUCTIONS = (
+    " This server is read-only: it cannot turn the machine on or off or change any setting."
+)
+_WRITE_INSTRUCTIONS = (
+    " Write tools are enabled: power, steam, steam level, coffee temperature, pre-brewing and "
+    "smart standby. Only change the machine when the user explicitly asks for that change."
+)
 
 
 @asynccontextmanager
@@ -37,13 +55,8 @@ async def _lifespan(_: MCPServer[None]) -> AsyncIterator[None]:
 server: MCPServer[None] = MCPServer(
     name="lamarzocco",
     version="0.1.0",
-    instructions=(
-        "Read-only access to La Marzocco home espresso machines through La Marzocco's cloud "
-        "(unofficial, not affiliated with La Marzocco). Times are ISO 8601 in the user's local "
-        "time. Shot durations (extractionSeconds) are pump time as measured by the machine, "
-        "which is usually a few seconds shorter than a scale's timer. The server cannot turn "
-        "the machine on or off or change any setting."
-    ),
+    instructions=_COMMON_INSTRUCTIONS
+    + (_WRITE_INSTRUCTIONS if ALLOW_WRITE else _READ_ONLY_INSTRUCTIONS),
     lifespan=_lifespan,
 )
 
@@ -177,6 +190,10 @@ async def get_coffee_and_flush_trend(
     tz = local_timezone_name()
     raw = await _fetch(lambda c: c.get_thing_coffee_and_flush_trend(serial, days=days, timezone=tz))
     return present(_widget_output(raw))  # type: ignore[no-any-return]
+
+
+if ALLOW_WRITE:
+    write_tools.register(server, lambda: service)
 
 
 def main() -> None:

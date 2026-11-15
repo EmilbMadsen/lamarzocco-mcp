@@ -74,6 +74,35 @@ All tools are read-only. Each wraps one method of pylamarzocco's `LaMarzoccoClou
 Responses are La Marzocco's raw JSON with three changes: timestamps become ISO 8601 in local time,
 the Bluetooth token and wifi name are redacted, and image/tutorial URLs are dropped.
 
+### Optional write tools
+
+Off by default. With `LAMARZOCCO_MCP_ALLOW_WRITE=1` in the server's environment, seven more tools
+are registered:
+
+| Tool | Changes |
+|---|---|
+| `set_power` | On (brewing mode) or standby |
+| `set_steam` | Steam boiler on/off |
+| `set_steam_target_level` | Steam level 1–3 (level-based machines such as the Linea Micra) |
+| `set_coffee_target_temperature` | Coffee boiler target, °C |
+| `set_pre_extraction_mode` | Pre-brewing on/off (or pre-infusion, where the machine has it) |
+| `set_pre_extraction_times` | Pre-brewing seconds in and out |
+| `set_smart_standby` | Automatic standby after N minutes |
+
+Each request is checked against the limits the machine reports before it is sent, and the
+setting is read back afterwards. Back flush, plumb-in, firmware updates and schedules are not
+exposed.
+
+To enable them in Claude Desktop, add an `env` block to the server entry:
+
+```json
+"lamarzocco": {
+  "command": "uv",
+  "args": ["--directory", "/path/to/lamarzocco-mcp", "run", "lamarzocco-mcp"],
+  "env": { "LAMARZOCCO_MCP_ALLOW_WRITE": "1" }
+}
+```
+
 ## Credits
 
 - [pylamarzocco](https://github.com/zweckj/pylamarzocco) by Josef Zweck (MIT)

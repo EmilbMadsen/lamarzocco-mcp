@@ -8,6 +8,7 @@ shot), and a new enum value from a firmware update would otherwise fail the whol
 from __future__ import annotations
 
 import asyncio
+import contextlib
 from collections.abc import Awaitable, Callable
 from contextvars import ContextVar
 from http import HTTPMethod
@@ -25,6 +26,10 @@ _captured: ContextVar[list[Any] | None] = ContextVar("_captured", default=None)
 
 class LaMarzoccoError(Exception):
     """An anticipated failure, with a message meant for the user."""
+
+
+class _ParseError(Exception):
+    """The API answered, but pylamarzocco could not parse the response."""
 
 
 class RawCloudClient(LaMarzoccoCloudClient):
@@ -112,10 +117,32 @@ class LaMarzoccoService:
     async def fetch(self, call: Callable[[LaMarzoccoCloudClient], Awaitable[Any]]) -> Any:
         """Run one pylamarzocco read method and return the raw JSON of its last REST response."""
         captured: list[Any] = []
+        # If pylamarzocco cannot parse the response (e.g. a new enum value), the raw JSON is
+        # still what the API sent, so return it.
+        with contextlib.suppress(_ParseError):
+            await self._run(call, captured)
+        if not captured:
+            raise LaMarzoccoError("pylamarzocco made no API call.")
+        return captured[-1]
+
+    async def command(self, call: Callable[[LaMarzoccoCloudClient], Awaitable[bool]]) -> bool:
+        """Run one pylamarzocco command method and return whether La Marzocco accepted it."""
+        try:
+            return bool(await self._run(call, []))
+        except _ParseError as err:
+            raise LaMarzoccoError(
+                "La Marzocco answered the command in a format pylamarzocco does not understand. "
+                "Check the machine before retrying."
+            ) from err
+
+    async def _run(
+        self, call: Callable[[LaMarzoccoCloudClient], Awaitable[Any]], captured: list[Any]
+    ) -> Any:
+        """Call pylamarzocco, capturing raw responses and mapping errors to LaMarzoccoError."""
         token = _captured.set(captured)
         try:
             client = await self._get_client()
-            await call(client)
+            return await call(client)
         except CredentialsMissingError as err:
             raise LaMarzoccoError(str(err)) from err
         except AuthFail as err:
@@ -134,13 +161,10 @@ class LaMarzoccoService:
             raise LaMarzoccoError(
                 f"Could not reach La Marzocco's cloud ({type(err).__name__}). Try again later."
             ) from err
-        except Exception:
-            # pylamarzocco could not parse the response (e.g. a new enum value). The raw JSON
-            # is still what the API sent, so return it if we have it.
-            if not captured:
-                raise
+        except Exception as err:
+            # The API answered, but pylamarzocco failed on the response.
+            if captured:
+                raise _ParseError() from err
+            raise
         finally:
             _captured.reset(token)
-        if not captured:
-            raise LaMarzoccoError("pylamarzocco made no API call.")
-        return captured[-1]

@@ -52,6 +52,7 @@ class FakeCloudClient(RawCloudClient):
         )
         self.responses = responses
         self.urls: list[str] = []
+        self.commands: list[tuple[str, dict[str, Any] | None]] = []
         self.error: Exception | None = None
 
     async def _fetch_json(
@@ -61,6 +62,9 @@ class FakeCloudClient(RawCloudClient):
         if self.error is not None:
             raise self.error
         path = url.split("?", 1)[0]
+        if "/command/" in path:
+            self.commands.append((path.rsplit("/", 1)[1], data))
+            return [{"id": f"cmd-{len(self.commands)}", "status": "Pending", "errorCode": None}]
         for pattern, name in ROUTES:
             if pattern.search(path):
                 return copy.deepcopy(self.responses[name])
@@ -72,6 +76,7 @@ class Harness:
         self.responses = load_fixture_responses()
         self.client: FakeCloudClient | None = None
         self.serial: str | None = SERIAL
+        self.service: LaMarzoccoService | None = None
 
     def factory(self, session: ClientSession) -> FakeCloudClient:
         self.client = FakeCloudClient(session, self.responses)
@@ -102,5 +107,6 @@ async def harness(monkeypatch: pytest.MonkeyPatch) -> AsyncIterator[Harness]:
         serial_loader=lambda: h.serial_loader(),
     )
     monkeypatch.setattr(server_module, "service", service)
+    h.service = service
     yield h
     await service.close()
