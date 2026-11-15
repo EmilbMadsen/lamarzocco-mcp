@@ -1,0 +1,29 @@
+# Python / uv
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Secrets and local config — never commit
+.env
+*.env
+!.env.example
+
+# Local data: raw discovery dumps and shot history
+dumps/
+*.sqlite
+*.sqlite3
+*.db
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Private planning notes
+PLAN.md

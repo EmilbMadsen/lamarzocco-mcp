@@ -1,0 +1,1479 @@
+{
+  "list_things": {
+    "ok": true,
+    "parsed": [
+      {
+        "serial_number": "SERIAL_1",
+        "type": "CoffeeMachine",
+        "name": "MACHINE_NAME_1",
+        "location": "LOCATION_1",
+        "model_code": "LINEAMICRA",
+        "model_name": "Linea Micra",
+        "connected": true,
+        "connection_date": "2026-11-14T22:56:19.978000+00:00",
+        "offline_mode": false,
+        "require_firmware_update": false,
+        "available_firmware_update": false,
+        "coffee_station": null,
+        "image_url": "https://lion.lamarzocco.io/img/thing-model/list/lineamicra/lineamicra-1-c-acciaio.png",
+        "ble_auth_token": "4070db371cb8a7a5492835df411dc8fa8ba9710da754e46595c0c37dc89cc2fd",
+        "shot_counter_supported": true
+      }
+    ],
+    "raw": [
+      [
+        {
+          "serialNumber": "SERIAL_1",
+          "type": "CoffeeMachine",
+          "name": "MACHINE_NAME_1",
+          "location": "LOCATION_1",
+          "modelCode": "LINEAMICRA",
+          "modelName": "LINEA MICRA",
+          "gatewayHw": "Esp32",
+          "connected": true,
+          "connectionDate": 1794696979978,
+          "offlineMode": false,
+          "requireFirmwareUpdate": false,
+          "availableFirmwareUpdate": false,
+          "coffeeStation": null,
+          "imageUrl": "https://lion.lamarzocco.io/img/thing-model/list/lineamicra/lineamicra-1-c-acciaio.png",
+          "imageUrlList": "https://lion.lamarzocco.io/img/thing-model/list/lineamicra/lineamicra-1-c-acciaio.png",
+          "imageUrlDetail": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+          "bleAuthToken": "**REDACTED**",
+          "shotCounterSupported": true
+        }
+      ]
+    ]
+  },
+  "get_thing_dashboard": {
+    "ok": true,
+    "parsed": {
+      "serial_number": "SERIAL_1",
+      "type": "CoffeeMachine",
+      "name": "MACHINE_NAME_1",
+      "location": "LOCATION_1",
+      "model_code": "LINEAMICRA",
+      "model_name": "Linea Micra",
+      "connected": true,
+      "connection_date": "2026-11-14T22:56:19.978000+00:00",
+      "offline_mode": false,
+      "require_firmware_update": false,
+      "available_firmware_update": false,
+      "coffee_station": null,
+      "image_url": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+      "ble_auth_token": "4070db371cb8a7a5492835df411dc8fa8ba9710da754e46595c0c37dc89cc2fd",
+      "shot_counter_supported": true,
+      "widgets": [
+        {
+          "code": "CMMachineStatus",
+          "index": 1,
+          "output": {
+            "status": "StandBy",
+            "available_modes": [
+              "BrewingMode",
+              "StandBy"
+            ],
+            "mode": "StandBy",
+            "next_status": null,
+            "brewing_start_time": null
+          }
+        },
+        {
+          "code": "CMCoffeeBoiler",
+          "index": 1,
+          "output": {
+            "status": "StandBy",
+            "enabled": true,
+            "enabled_supported": false,
+            "target_temperature": 94.0,
+            "target_temperature_min": 80,
+            "target_temperature_max": 100,
+            "target_temperature_step": 0.1,
+            "ready_start_time": null
+          }
+        },
+        {
+          "code": "CMSteamBoilerLevel",
+          "index": 1,
+          "output": {
+            "status": "StandBy",
+            "enabled": true,
+            "enabled_supported": true,
+            "target_level": "Level2",
+            "target_level_supported": true,
+            "ready_start_time": null
+          }
+        },
+        {
+          "code": "CMPreBrewing",
+          "index": 1,
+          "output": {
+            "available_modes": [
+              "PreBrewing",
+              "Disabled"
+            ],
+            "mode": "Disabled",
+            "times": {
+              "pre_infusion": [],
+              "pre_brewing": [
+                {
+                  "seconds_min": {
+                    "In": 1.0,
+                    "Out": 1.0
+                  },
+                  "seconds_max": {
+                    "In": 9.0,
+                    "Out": 9.0
+                  },
+                  "seconds_step": {
+                    "In": 0.1,
+                    "Out": 0.1
+                  },
+                  "dose_index": "ByGroup",
+                  "seconds": {
+                    "In": 2.0,
+                    "Out": 5.0
+                  }
+                }
+              ]
+            },
+            "dose_index_supported": false
+          }
+        },
+        {
+          "code": "CMBackFlush",
+          "index": 1,
+          "output": {
+            "status": "Off",
+            "last_cleaning_start_time": "2026-10-30T16:08:16.482000+00:00"
+          }
+        }
+      ],
+      "config": {
+        "CMMachineStatus": {
+          "status": "StandBy",
+          "available_modes": [
+            "BrewingMode",
+            "StandBy"
+          ],
+          "mode": "StandBy",
+          "next_status": null,
+          "brewing_start_time": null
+        },
+        "CMCoffeeBoiler": {
+          "status": "StandBy",
+          "enabled": true,
+          "enabled_supported": false,
+          "target_temperature": 94.0,
+          "target_temperature_min": 80,
+          "target_temperature_max": 100,
+          "target_temperature_step": 0.1,
+          "ready_start_time": null
+        },
+        "CMSteamBoilerLevel": {
+          "status": "StandBy",
+          "enabled": true,
+          "enabled_supported": true,
+          "target_level": "Level2",
+          "target_level_supported": true,
+          "ready_start_time": null
+        },
+        "CMPreBrewing": {
+          "available_modes": [
+            "PreBrewing",
+            "Disabled"
+          ],
+          "mode": "Disabled",
+          "times": {
+            "pre_infusion": [],
+            "pre_brewing": [
+              {
+                "seconds_min": {
+                  "In": 1.0,
+                  "Out": 1.0
+                },
+                "seconds_max": {
+                  "In": 9.0,
+                  "Out": 9.0
+                },
+                "seconds_step": {
+                  "In": 0.1,
+                  "Out": 0.1
+                },
+                "dose_index": "ByGroup",
+                "seconds": {
+                  "In": 2.0,
+                  "Out": 5.0
+                }
+              }
+            ]
+          },
+          "dose_index_supported": false
+        },
+        "CMBackFlush": {
+          "status": "Off",
+          "last_cleaning_start_time": "2026-10-30T16:08:16.482000+00:00"
+        }
+      }
+    },
+    "raw": [
+      {
+        "serialNumber": "SERIAL_1",
+        "type": "CoffeeMachine",
+        "name": "MACHINE_NAME_1",
+        "location": "LOCATION_1",
+        "modelCode": "LINEAMICRA",
+        "modelName": "LINEA MICRA",
+        "gatewayHw": "Esp32",
+        "connected": true,
+        "connectionDate": 1794696979978,
+        "offlineMode": false,
+        "requireFirmwareUpdate": false,
+        "availableFirmwareUpdate": false,
+        "coffeeStation": null,
+        "imageUrl": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+        "imageUrlList": "https://lion.lamarzocco.io/img/thing-model/list/lineamicra/lineamicra-1-c-acciaio.png",
+        "imageUrlDetail": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+        "bleAuthToken": "**REDACTED**",
+        "shotCounterSupported": true,
+        "widgets": [
+          {
+            "code": "CMMachineStatus",
+            "index": 1,
+            "output": {
+              "status": "StandBy",
+              "availableModes": [
+                "BrewingMode",
+                "StandBy"
+              ],
+              "mode": "StandBy",
+              "nextStatus": null,
+              "brewingStartTime": null,
+              "lastCoffee": null,
+              "lastFlush": null,
+              "widget_type": "CMMachineStatus"
+            },
+            "tutorialUrl": null
+          },
+          {
+            "code": "CMCoffeeBoiler",
+            "index": 1,
+            "output": {
+              "status": "StandBy",
+              "enabled": true,
+              "enabledSupported": false,
+              "targetTemperature": 94.0,
+              "targetTemperatureMin": 80,
+              "targetTemperatureMax": 100,
+              "targetTemperatureStep": 0.1,
+              "readyStartTime": null,
+              "widget_type": "CMCoffeeBoiler"
+            },
+            "tutorialUrl": null
+          },
+          {
+            "code": "CMSteamBoilerLevel",
+            "index": 1,
+            "output": {
+              "status": "StandBy",
+              "enabled": true,
+              "enabledSupported": true,
+              "targetLevel": "Level2",
+              "targetLevelSupported": true,
+              "readyStartTime": null,
+              "widget_type": "CMSteamBoilerLevel"
+            },
+            "tutorialUrl": null
+          },
+          {
+            "code": "CMPreBrewing",
+            "index": 1,
+            "output": {
+              "availableModes": [
+                "PreBrewing",
+                "Disabled"
+              ],
+              "mode": "Disabled",
+              "times": {
+                "PreBrewing": [
+                  {
+                    "doseIndex": "ByGroup",
+                    "availableTimeModes": [],
+                    "timeMode": null,
+                    "timeModeSupported": false,
+                    "seconds": {
+                      "Out": 5.0,
+                      "In": 2.0
+                    },
+                    "secondsMin": {
+                      "Out": 1,
+                      "In": 1
+                    },
+                    "secondsMax": {
+                      "Out": 9,
+                      "In": 9
+                    },
+                    "secondsStep": {
+                      "Out": 0.1,
+                      "In": 0.1
+                    }
+                  }
+                ]
+              },
+              "doseIndexSupported": false,
+              "widget_type": "CMPreBrewing"
+            },
+            "tutorialUrl": "https://www.lamarzocco.com/it/en/app/support/brewing-features/#gs3-av-linea-micra-linea-mini-home"
+          },
+          {
+            "code": "CMBackFlush",
+            "index": 1,
+            "output": {
+              "lastCleaningStartTime": 1793376496482,
+              "status": "Off",
+              "widget_type": "CMBackFlush"
+            },
+            "tutorialUrl": "http://lamarzocco.com/it/en/app/support/cleaning-and-backflush/#linea-micra"
+          }
+        ],
+        "runningCommands": [],
+        "latestEndedCommands": []
+      }
+    ]
+  },
+  "get_thing_settings": {
+    "ok": true,
+    "parsed": {
+      "serial_number": "SERIAL_1",
+      "type": "CoffeeMachine",
+      "name": "MACHINE_NAME_1",
+      "location": "LOCATION_1",
+      "model_code": "LINEAMICRA",
+      "model_name": "Linea Micra",
+      "connected": true,
+      "connection_date": "2026-11-14T22:56:19.978000+00:00",
+      "offline_mode": false,
+      "require_firmware_update": false,
+      "available_firmware_update": false,
+      "coffee_station": null,
+      "image_url": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+      "ble_auth_token": "4070db371cb8a7a5492835df411dc8fa8ba9710da754e46595c0c37dc89cc2fd",
+      "shot_counter_supported": true,
+      "actual_firmwares": [
+        {
+          "type": "Gateway",
+          "build_version": "v7.5.3",
+          "change_log": null,
+          "thing_model_code": "LineaMicra",
+          "status": "Updated",
+          "available_update": null
+        },
+        {
+          "type": "Machine",
+          "build_version": "v1.17",
+          "change_log": null,
+          "thing_model_code": "LineaMicra",
+          "status": "Updated",
+          "available_update": null
+        }
+      ],
+      "wifi_ssid": "SSID_1",
+      "wifi_rssi": -52,
+      "plumb_in_supported": true,
+      "is_plumbed_in": false,
+      "cropster_supported": false,
+      "cropster_active": false,
+      "hemro_supported": false,
+      "hemro_active": false,
+      "factory_reset_supported": true,
+      "auto_update_supported": true,
+      "auto_update": true,
+      "firmwares": {
+        "Gateway": {
+          "type": "Gateway",
+          "build_version": "v7.5.3",
+          "change_log": null,
+          "thing_model_code": "LineaMicra",
+          "status": "Updated",
+          "available_update": null
+        },
+        "Machine": {
+          "type": "Machine",
+          "build_version": "v1.17",
+          "change_log": null,
+          "thing_model_code": "LineaMicra",
+          "status": "Updated",
+          "available_update": null
+        }
+      }
+    },
+    "raw": [
+      {
+        "serialNumber": "SERIAL_1",
+        "type": "CoffeeMachine",
+        "name": "MACHINE_NAME_1",
+        "location": "LOCATION_1",
+        "modelCode": "LINEAMICRA",
+        "modelName": "LINEA MICRA",
+        "gatewayHw": "Esp32",
+        "connected": true,
+        "connectionDate": 1794696979978,
+        "offlineMode": false,
+        "requireFirmwareUpdate": false,
+        "availableFirmwareUpdate": false,
+        "coffeeStation": null,
+        "imageUrl": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+        "imageUrlList": "https://lion.lamarzocco.io/img/thing-model/list/lineamicra/lineamicra-1-c-acciaio.png",
+        "imageUrlDetail": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+        "bleAuthToken": "**REDACTED**",
+        "shotCounterSupported": true,
+        "actualFirmwares": [
+          {
+            "type": "Gateway",
+            "buildVersion": "v7.5.3",
+            "changeLog": null,
+            "thingModelCode": "LineaMicra",
+            "status": "Updated",
+            "availableUpdate": null
+          },
+          {
+            "type": "Machine",
+            "buildVersion": "v1.17",
+            "changeLog": null,
+            "thingModelCode": "LineaMicra",
+            "status": "Updated",
+            "availableUpdate": null
+          }
+        ],
+        "wifiSsid": "SSID_1",
+        "wifiRssi": -52,
+        "plumbInSupported": true,
+        "isPlumbedIn": false,
+        "cropsterSupported": false,
+        "cropsterActive": null,
+        "hemroSupported": false,
+        "hemroActive": null,
+        "factoryResetSupported": true,
+        "autoUpdateSupported": true,
+        "autoUpdate": true
+      }
+    ]
+  },
+  "get_thing_statistics": {
+    "ok": true,
+    "parsed": {
+      "serial_number": "SERIAL_1",
+      "type": "CoffeeMachine",
+      "name": "MACHINE_NAME_1",
+      "location": "LOCATION_1",
+      "model_code": "LINEAMICRA",
+      "model_name": "Linea Micra",
+      "connected": true,
+      "connection_date": "2026-11-14T22:56:19.978000+00:00",
+      "offline_mode": false,
+      "require_firmware_update": false,
+      "available_firmware_update": false,
+      "coffee_station": null,
+      "image_url": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+      "ble_auth_token": "4070db371cb8a7a5492835df411dc8fa8ba9710da754e46595c0c37dc89cc2fd",
+      "shot_counter_supported": true,
+      "firmwares": null,
+      "selected_widget_codes": [
+        "LAST_COFFEE",
+        "COFFEE_AND_FLUSH_COUNTER"
+      ],
+      "all_widget_codes": [
+        "LAST_COFFEE",
+        "COFFEE_AND_FLUSH_TREND",
+        "COFFEE_AND_FLUSH_COUNTER"
+      ],
+      "selected_widgets": [
+        {
+          "code": "LAST_COFFEE",
+          "index": 1,
+          "output": {
+            "last_coffees": [
+              {
+                "time": "2026-11-15T07:02:32.399000+00:00",
+                "extraction_seconds": 22.136,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-14T16:12:57.711000+00:00",
+                "extraction_seconds": 17.978,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-14T09:05:33.304000+00:00",
+                "extraction_seconds": 18.915,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-14T06:58:57.061000+00:00",
+                "extraction_seconds": 20.548,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-13T06:48:25.687000+00:00",
+                "extraction_seconds": 24.359,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-12T10:24:36.653000+00:00",
+                "extraction_seconds": 19.226,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-12T07:39:54.451000+00:00",
+                "extraction_seconds": 19.38,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-11T05:11:53.644000+00:00",
+                "extraction_seconds": 22.83,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-10T12:37:35.392000+00:00",
+                "extraction_seconds": 21.27,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-10T09:41:59.233000+00:00",
+                "extraction_seconds": 18.461,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-10T06:43:07.196000+00:00",
+                "extraction_seconds": 26.31,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-09T06:24:29.190000+00:00",
+                "extraction_seconds": 27.601,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-08T09:11:58.552000+00:00",
+                "extraction_seconds": 26.273,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-08T07:21:52.958000+00:00",
+                "extraction_seconds": 23.677,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              },
+              {
+                "time": "2026-11-07T08:44:25.407000+00:00",
+                "extraction_seconds": 22.959,
+                "dose_mode": "Continuous",
+                "dose_index": "Continuous",
+                "dose_value_numerator": null
+              }
+            ]
+          }
+        },
+        {
+          "code": "COFFEE_AND_FLUSH_COUNTER",
+          "index": 1,
+          "output": {
+            "total_coffee": 644,
+            "total_flush": 722
+          }
+        }
+      ],
+      "widgets": {
+        "LAST_COFFEE": {
+          "last_coffees": [
+            {
+              "time": "2026-11-15T07:02:32.399000+00:00",
+              "extraction_seconds": 22.136,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-14T16:12:57.711000+00:00",
+              "extraction_seconds": 17.978,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-14T09:05:33.304000+00:00",
+              "extraction_seconds": 18.915,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-14T06:58:57.061000+00:00",
+              "extraction_seconds": 20.548,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-13T06:48:25.687000+00:00",
+              "extraction_seconds": 24.359,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-12T10:24:36.653000+00:00",
+              "extraction_seconds": 19.226,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-12T07:39:54.451000+00:00",
+              "extraction_seconds": 19.38,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-11T05:11:53.644000+00:00",
+              "extraction_seconds": 22.83,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-10T12:37:35.392000+00:00",
+              "extraction_seconds": 21.27,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-10T09:41:59.233000+00:00",
+              "extraction_seconds": 18.461,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-10T06:43:07.196000+00:00",
+              "extraction_seconds": 26.31,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-09T06:24:29.190000+00:00",
+              "extraction_seconds": 27.601,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-08T09:11:58.552000+00:00",
+              "extraction_seconds": 26.273,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-08T07:21:52.958000+00:00",
+              "extraction_seconds": 23.677,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            },
+            {
+              "time": "2026-11-07T08:44:25.407000+00:00",
+              "extraction_seconds": 22.959,
+              "dose_mode": "Continuous",
+              "dose_index": "Continuous",
+              "dose_value_numerator": null
+            }
+          ]
+        },
+        "COFFEE_AND_FLUSH_COUNTER": {
+          "total_coffee": 644,
+          "total_flush": 722
+        }
+      }
+    },
+    "raw": [
+      {
+        "serialNumber": "SERIAL_1",
+        "type": "CoffeeMachine",
+        "name": "MACHINE_NAME_1",
+        "location": "LOCATION_1",
+        "modelCode": "LINEAMICRA",
+        "modelName": "LINEA MICRA",
+        "gatewayHw": "Esp32",
+        "connected": true,
+        "connectionDate": 1794696979978,
+        "offlineMode": false,
+        "requireFirmwareUpdate": false,
+        "availableFirmwareUpdate": false,
+        "coffeeStation": null,
+        "imageUrl": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+        "imageUrlList": "https://lion.lamarzocco.io/img/thing-model/list/lineamicra/lineamicra-1-c-acciaio.png",
+        "imageUrlDetail": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+        "bleAuthToken": "**REDACTED**",
+        "shotCounterSupported": true,
+        "firmwares": null,
+        "selectedWidgetCodes": [
+          "LAST_COFFEE",
+          "COFFEE_AND_FLUSH_COUNTER"
+        ],
+        "allWidgetCodes": [
+          "LAST_COFFEE",
+          "COFFEE_AND_FLUSH_TREND",
+          "COFFEE_AND_FLUSH_COUNTER"
+        ],
+        "selectedWidgets": [
+          {
+            "code": "LAST_COFFEE",
+            "index": 1,
+            "output": {
+              "lastCoffees": [
+                {
+                  "time": 1794726152399,
+                  "extractionSeconds": 22.136,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794672777711,
+                  "extractionSeconds": 17.978,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794647133304,
+                  "extractionSeconds": 18.915,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794639537061,
+                  "extractionSeconds": 20.548,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794552505687,
+                  "extractionSeconds": 24.359,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794479076653,
+                  "extractionSeconds": 19.226,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794469194451,
+                  "extractionSeconds": 19.38,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794373913644,
+                  "extractionSeconds": 22.83,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794314255392,
+                  "extractionSeconds": 21.27,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794303719233,
+                  "extractionSeconds": 18.461,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794292987196,
+                  "extractionSeconds": 26.31,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794205469190,
+                  "extractionSeconds": 27.601,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794129118552,
+                  "extractionSeconds": 26.273,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794122512958,
+                  "extractionSeconds": 23.677,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                },
+                {
+                  "time": 1794041065407,
+                  "extractionSeconds": 22.959,
+                  "doseMode": "Continuous",
+                  "doseIndex": "Continuous",
+                  "doseValue": null,
+                  "doseValueNumerator": null,
+                  "targetTemperature": 94,
+                  "valid": true,
+                  "invalidReason": null
+                }
+              ],
+              "widget_type": "LAST_COFFEE"
+            }
+          },
+          {
+            "code": "COFFEE_AND_FLUSH_COUNTER",
+            "index": 1,
+            "output": {
+              "totalCoffee": 644,
+              "totalFlush": 722,
+              "widget_type": "COFFEE_AND_FLUSH_COUNTER"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "get_thing_firmware": {
+    "ok": true,
+    "parsed": {
+      "status": "Updated",
+      "command_status": null,
+      "progress_info": null,
+      "progress_percentage": null
+    },
+    "raw": [
+      {
+        "status": "Updated",
+        "commandStatus": null,
+        "progressInfo": null,
+        "progressPercentage": null
+      }
+    ]
+  },
+  "get_thing_schedule": {
+    "ok": true,
+    "parsed": {
+      "serial_number": "SERIAL_1",
+      "type": "CoffeeMachine",
+      "name": "MACHINE_NAME_1",
+      "location": "LOCATION_1",
+      "model_code": "LINEAMICRA",
+      "model_name": "Linea Micra",
+      "connected": true,
+      "connection_date": "2026-11-14T22:56:19.978000+00:00",
+      "offline_mode": false,
+      "require_firmware_update": false,
+      "available_firmware_update": false,
+      "coffee_station": null,
+      "image_url": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+      "ble_auth_token": "4070db371cb8a7a5492835df411dc8fa8ba9710da754e46595c0c37dc89cc2fd",
+      "shot_counter_supported": true,
+      "smart_stand_by_supported": true,
+      "smart_stand_by": {
+        "enabled": true,
+        "minutes": 30,
+        "minutes_min": 1,
+        "minutes_max": 240,
+        "minutes_step": 1,
+        "after": "LastBrewing"
+      },
+      "smart_wake_up_sleep_supported": true,
+      "smart_wake_up_sleep": {
+        "smart_stand_by_enabled": false,
+        "smart_stand_by_minutes": 0,
+        "smart_stand_by_minutes_min": 0,
+        "smart_stand_by_minutes_max": 0,
+        "smart_stand_by_minutes_step": 0,
+        "smart_stand_by_after": "PowerOn",
+        "schedules": [],
+        "schedules_dict": {}
+      },
+      "auto_stand_by": null,
+      "auto_stand_by_supported": false,
+      "auto_on_off": null,
+      "auto_on_off_supported": false,
+      "eco_mode_supported": false,
+      "eco_mode": null
+    },
+    "raw": [
+      {
+        "serialNumber": "SERIAL_1",
+        "type": "CoffeeMachine",
+        "name": "MACHINE_NAME_1",
+        "location": "LOCATION_1",
+        "modelCode": "LINEAMICRA",
+        "modelName": "LINEA MICRA",
+        "gatewayHw": "Esp32",
+        "connected": true,
+        "connectionDate": 1794696979978,
+        "offlineMode": false,
+        "requireFirmwareUpdate": false,
+        "availableFirmwareUpdate": false,
+        "coffeeStation": null,
+        "imageUrl": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+        "imageUrlList": "https://lion.lamarzocco.io/img/thing-model/list/lineamicra/lineamicra-1-c-acciaio.png",
+        "imageUrlDetail": "https://lion.lamarzocco.io/img/thing-model/detail/lineamicra/lineamicra-1-c-acciaio.png",
+        "bleAuthToken": "**REDACTED**",
+        "shotCounterSupported": true,
+        "smartStandBySupported": true,
+        "smartStandBy": {
+          "enabled": true,
+          "minutes": 30,
+          "minutesMin": 1,
+          "minutesMax": 240,
+          "minutesStep": 1,
+          "after": "LastBrewing"
+        },
+        "smartStandByTutorialUrl": null,
+        "smartWakeUpSleepSupported": true,
+        "smartWakeUpSleep": {
+          "steamBoilerSupported": true,
+          "schedules": []
+        },
+        "smartWakeUpSleepTutorialUrl": "https://www.lamarzocco.com/it/en/app/support/scheduling/#gs3-linea-micra-linea-mini-home",
+        "earlyStartSupported": true,
+        "earlyStart": {
+          "enabled": false
+        },
+        "earlyStartTutorialUrl": null,
+        "smartWakeUpSleepSmartStandByTutorialUrl": null,
+        "weeklySupported": false,
+        "weekly": null,
+        "weeklyTutorialUrl": "https://www.lamarzocco.com/it/en/app/support/scheduling/#linea-classic-s",
+        "autoOnOffSupported": false,
+        "autoOnOff": null,
+        "autoOnOffTutorialUrl": "https://www.lamarzocco.com/it/en/app/support/scheduling/#gb5-s-x-kb90-linea-pb-pbx-strada-s-x-commercial",
+        "autoOnOffEcoModeTutorialUrl": null,
+        "autoStandBySupported": false,
+        "autoStandBy": null,
+        "autoStandByTutorialUrl": null,
+        "ecoModeSupported": false,
+        "ecoMode": null,
+        "ecoModeTutorialUrl": null,
+        "sistemaUrl": null
+      }
+    ]
+  },
+  "get_thing_coffee_and_flush_counter": {
+    "ok": true,
+    "parsed": {
+      "total_coffee": 644,
+      "total_flush": 722
+    },
+    "raw": [
+      {
+        "code": "COFFEE_AND_FLUSH_COUNTER",
+        "index": 1,
+        "output": {
+          "totalCoffee": 644,
+          "totalFlush": 722
+        }
+      }
+    ]
+  },
+  "get_thing_last_coffee": {
+    "ok": true,
+    "parsed": {
+      "last_coffees": [
+        {
+          "time": "2026-11-15T07:02:32.399000+00:00",
+          "extraction_seconds": 22.136,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-14T16:12:57.711000+00:00",
+          "extraction_seconds": 17.978,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-14T09:05:33.304000+00:00",
+          "extraction_seconds": 18.915,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-14T06:58:57.061000+00:00",
+          "extraction_seconds": 20.548,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-13T06:48:25.687000+00:00",
+          "extraction_seconds": 24.359,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-12T10:24:36.653000+00:00",
+          "extraction_seconds": 19.226,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-12T07:39:54.451000+00:00",
+          "extraction_seconds": 19.38,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-11T05:11:53.644000+00:00",
+          "extraction_seconds": 22.83,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-10T12:37:35.392000+00:00",
+          "extraction_seconds": 21.27,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-10T09:41:59.233000+00:00",
+          "extraction_seconds": 18.461,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-10T06:43:07.196000+00:00",
+          "extraction_seconds": 26.31,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-09T06:24:29.190000+00:00",
+          "extraction_seconds": 27.601,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-08T09:11:58.552000+00:00",
+          "extraction_seconds": 26.273,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-08T07:21:52.958000+00:00",
+          "extraction_seconds": 23.677,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        },
+        {
+          "time": "2026-11-07T08:44:25.407000+00:00",
+          "extraction_seconds": 22.959,
+          "dose_mode": "Continuous",
+          "dose_index": "Continuous",
+          "dose_value_numerator": null
+        }
+      ]
+    },
+    "raw": [
+      {
+        "code": "LAST_COFFEE",
+        "index": 1,
+        "output": {
+          "lastCoffees": [
+            {
+              "time": 1794726152399,
+              "extractionSeconds": 22.136,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794672777711,
+              "extractionSeconds": 17.978,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794647133304,
+              "extractionSeconds": 18.915,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794639537061,
+              "extractionSeconds": 20.548,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794552505687,
+              "extractionSeconds": 24.359,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794479076653,
+              "extractionSeconds": 19.226,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794469194451,
+              "extractionSeconds": 19.38,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794373913644,
+              "extractionSeconds": 22.83,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794314255392,
+              "extractionSeconds": 21.27,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794303719233,
+              "extractionSeconds": 18.461,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794292987196,
+              "extractionSeconds": 26.31,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794205469190,
+              "extractionSeconds": 27.601,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794129118552,
+              "extractionSeconds": 26.273,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794122512958,
+              "extractionSeconds": 23.677,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            },
+            {
+              "time": 1794041065407,
+              "extractionSeconds": 22.959,
+              "doseMode": "Continuous",
+              "doseIndex": "Continuous",
+              "doseValue": null,
+              "doseValueNumerator": null,
+              "targetTemperature": 94,
+              "valid": true,
+              "invalidReason": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "get_thing_coffee_and_flush_trend": {
+    "ok": true,
+    "parsed": {
+      "days": 7,
+      "timezone": "Europe/Copenhagen",
+      "coffees": [
+        {
+          "timestamp": "2026-11-08T23:00:00+00:00",
+          "value": 1
+        },
+        {
+          "timestamp": "2026-11-09T23:00:00+00:00",
+          "value": 3
+        },
+        {
+          "timestamp": "2026-11-10T23:00:00+00:00",
+          "value": 1
+        },
+        {
+          "timestamp": "2026-11-11T23:00:00+00:00",
+          "value": 2
+        },
+        {
+          "timestamp": "2026-11-12T23:00:00+00:00",
+          "value": 1
+        },
+        {
+          "timestamp": "2026-11-13T23:00:00+00:00",
+          "value": 3
+        },
+        {
+          "timestamp": "2026-11-14T23:00:00+00:00",
+          "value": 1
+        }
+      ]
+    },
+    "raw": [
+      {
+        "code": "COFFEE_AND_FLUSH_TREND",
+        "index": 1,
+        "output": {
+          "days": 7,
+          "timezone": "Europe/Copenhagen",
+          "coffees": [
+            {
+              "timestamp": 1794178800000,
+              "value": 1
+            },
+            {
+              "timestamp": 1794265200000,
+              "value": 3
+            },
+            {
+              "timestamp": 1794351600000,
+              "value": 1
+            },
+            {
+              "timestamp": 1794438000000,
+              "value": 2
+            },
+            {
+              "timestamp": 1794524400000,
+              "value": 1
+            },
+            {
+              "timestamp": 1794610800000,
+              "value": 3
+            },
+            {
+              "timestamp": 1794697200000,
+              "value": 1
+            }
+          ],
+          "flushes": [
+            {
+              "timestamp": 1794178800000,
+              "value": 2
+            },
+            {
+              "timestamp": 1794265200000,
+              "value": 4
+            },
+            {
+              "timestamp": 1794351600000,
+              "value": 2
+            },
+            {
+              "timestamp": 1794438000000,
+              "value": 2
+            },
+            {
+              "timestamp": 1794524400000,
+              "value": 1
+            },
+            {
+              "timestamp": 1794610800000,
+              "value": 4
+            },
+            {
+              "timestamp": 1794697200000,
+              "value": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

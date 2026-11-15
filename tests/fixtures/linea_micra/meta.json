@@ -1,0 +1,10 @@
+{
+  "started": "2026-11-15T07:50:41.618+00:00",
+  "minutes": 0,
+  "websocket": false,
+  "bluetooth": false,
+  "days": 7,
+  "timezone": "Europe/Copenhagen",
+  "python": "3.13.8",
+  "finished": "2026-11-15T07:50:46.798+00:00"
+}
