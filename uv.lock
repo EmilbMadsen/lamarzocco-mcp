@@ -847,7 +847,7 @@ dev = [
 requires-dist = [
     { name = "keyring", specifier = ">=25.7.0" },
     { name = "mcp", specifier = ">=2.3.0" },
-    { name = "mcp-owner-auth", marker = "extra == 'remote'", git = "https://github.com/EmilbMadsen/mcp-owner-auth?rev=72e3ddc" },
+    { name = "mcp-owner-auth", marker = "extra == 'remote'", specifier = ">=0.1.1" },
     { name = "pylamarzocco", specifier = ">=2.5,<2.6" },
     { name = "python-dotenv", specifier = ">=1.2.4" },
 ]
@@ -856,7 +856,7 @@ provides-extras = ["remote"]
 [package.metadata.requires-dev]
 dev = [
     { name = "httpx", specifier = ">=0.28" },
-    { name = "mcp-owner-auth", git = "https://github.com/EmilbMadsen/mcp-owner-auth?rev=72e3ddc" },
+    { name = "mcp-owner-auth", specifier = ">=0.1.1" },
     { name = "mypy", specifier = ">=2.4.1" },
     { name = "pytest", specifier = ">=9.2.0" },
     { name = "pytest-asyncio", specifier = ">=1.5.0" },
@@ -989,13 +989,17 @@ wheels = [
 [[package]]
 name = "mcp-owner-auth"
 version = "0.1.1"
-source = { git = "https://github.com/EmilbMadsen/mcp-owner-auth?rev=72e3ddc#72e3ddcb1c847d96d34dd8ad78b12142ee061cdb" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "argon2-cffi" },
     { name = "mcp" },
     { name = "pyotp" },
     { name = "qrcode" },
     { name = "uvicorn" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/28/7e/66a90fe35416593affe9830c882c29a458a4a998dcb46bdba7e543ac26dd/mcp_owner_auth-0.1.1.tar.gz", hash = "sha256:8e63823a0fb0d457ee092c084a6f38813b88e646e76d5f6426daaf39276dcf48", size = 19380, upload-time = "2026-11-17T14:52:37.901Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/51/b5/9f354c3249240547fcbeea7d2bf5b76d959aeaed2b7bb455975234b5b5f8/mcp_owner_auth-0.1.1-py3-none-any.whl", hash = "sha256:ea08bccc1c7796b605a4f7f5006b571f66119dcaa5d39f8ebb2b97f291cf6330", size = 22270, upload-time = "2026-11-17T14:52:36.45Z" },
 ]
 
 [[package]]

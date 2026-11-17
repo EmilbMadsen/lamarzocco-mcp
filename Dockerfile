@@ -1,9 +1,6 @@
 # syntax=docker/dockerfile:1
 # Remote deployment image: `lamarzocco-mcp serve --http` behind single-user OAuth.
 FROM python:3.13-slim AS build
-# git only while mcp-owner-auth is resolved from its git repository (see [tool.uv.sources])
-RUN apt-get update && apt-get install -y --no-install-recommends git \
-    && rm -rf /var/lib/apt/lists/*
 COPY --from=ghcr.io/astral-sh/uv:0.9.2 /uv /usr/local/bin/uv
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=never
 WORKDIR /app
