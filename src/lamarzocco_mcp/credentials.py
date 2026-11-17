@@ -12,8 +12,12 @@ from __future__ import annotations
 
 import contextlib
 import json
+import logging
 import os
+import stat
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
 
 import keyring
 from dotenv import find_dotenv, load_dotenv
@@ -27,6 +31,11 @@ _INSTALLATION_KEY = "installation_key"
 _SERIAL = "serial_number"
 
 SERIAL_ENV_VAR = "LAMARZOCCO_SERIAL"
+# For servers and containers without a keyring: a JSON file (e.g. a Docker secret) with
+# {"username", "password", "installation_key": {...}, "serial_number" (optional)}.
+CREDENTIALS_FILE_ENV_VAR = "LAMARZOCCO_CREDENTIALS_FILE"
+_LOGGER = logging.getLogger(__name__)
+
 SETUP_HINT = "Run `uvx lamarzocco-mcp setup` (or `uv run lamarzocco-mcp setup` in a checkout)."
 
 
@@ -49,7 +58,37 @@ def save_credentials(credentials: Credentials) -> None:
     )
 
 
+def _credentials_file() -> dict[str, Any] | None:
+    raw = os.environ.get(CREDENTIALS_FILE_ENV_VAR, "").strip()
+    if not raw:
+        return None
+    path = Path(raw).expanduser()
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise CredentialsMissingError(
+            f"{CREDENTIALS_FILE_ENV_VAR} points to {path}, which is not a readable JSON file."
+        ) from exc
+    if os.name == "posix" and path.stat().st_mode & (stat.S_IRWXG | stat.S_IRWXO):
+        _LOGGER.warning("%s is readable by other users; restrict it with chmod 600", path)
+    if not isinstance(data, dict):
+        raise CredentialsMissingError(f"{path} must contain a JSON object.")
+    return data
+
+
 def load_credentials() -> Credentials:
+    from_file = _credentials_file()
+    if from_file is not None:
+        try:
+            return Credentials(
+                username=str(from_file["username"]),
+                password=str(from_file["password"]),
+                installation_key=InstallationKey.from_dict(from_file["installation_key"]),
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            raise CredentialsMissingError(
+                f"The credentials file needs username, password and installation_key. {SETUP_HINT}"
+            ) from exc
     username = keyring.get_password(KEYRING_SERVICE, _USERNAME)
     password = keyring.get_password(KEYRING_SERVICE, _PASSWORD)
     key_json = keyring.get_password(KEYRING_SERVICE, _INSTALLATION_KEY)
@@ -79,6 +118,9 @@ def load_serial_number() -> str:
     serial = os.environ.get(SERIAL_ENV_VAR, "").strip()
     if serial:
         return serial
+    from_file = _credentials_file()
+    if from_file is not None and from_file.get("serial_number"):
+        return str(from_file["serial_number"])
     stored = keyring.get_password(KEYRING_SERVICE, _SERIAL)
     if stored:
         return stored

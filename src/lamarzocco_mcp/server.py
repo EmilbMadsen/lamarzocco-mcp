@@ -10,6 +10,7 @@ LAMARZOCCO_MCP_ALLOW_WRITE=1 is set in the server's environment.
 from __future__ import annotations
 
 import argparse
+import logging
 import os
 import sys
 from collections.abc import AsyncIterator, Awaitable, Callable
@@ -25,6 +26,7 @@ from pylamarzocco import LaMarzoccoCloudClient
 
 from . import __version__, write_tools
 from .client import LaMarzoccoError, LaMarzoccoService
+from .credentials import CredentialsMissingError, load_credentials
 from .presentation import present
 from .setup_cli import run_setup
 
@@ -199,11 +201,90 @@ if ALLOW_WRITE:
     write_tools.register(server, lambda: service)
 
 
+STATE_DIR_ENV_VAR = "LAMARZOCCO_MCP_STATE_DIR"
+ALLOW_REMOTE_WRITE_ENV = "LAMARZOCCO_MCP_ALLOW_REMOTE_WRITE"
+APP_NAME = "La Marzocco"
+REMOTE_HINT = "Remote access needs the extra: `pip install 'lamarzocco-mcp[remote]'`."
+
+
+def state_dir() -> Path:
+    raw = os.environ.get(STATE_DIR_ENV_VAR, "").strip()
+    path = Path(raw).expanduser() if raw else Path("~/.config/lamarzocco-mcp").expanduser()
+    path.mkdir(parents=True, exist_ok=True, mode=0o700)
+    return path
+
+
+def auth_config() -> Any:
+    from mcp_owner_auth import OwnerAuthConfig
+
+    access = "read and control" if ALLOW_WRITE else "read-only access to"
+    return OwnerAuthConfig.from_env(
+        "LAMARZOCCO_MCP",
+        state_dir=state_dir(),
+        app_name=APP_NAME,
+        command="lamarzocco-mcp",
+        scope="lamarzocco:write" if ALLOW_WRITE else "lamarzocco:read",
+        consent=f"{access} your La Marzocco espresso machine "
+        "(status, settings, statistics and recent shots)",
+    )
+
+
+def _add_auth_parser(commands: Any) -> None:
+    try:
+        from mcp_owner_auth import cli as auth_cli
+    except ImportError:
+        stub = commands.add_parser("auth", help="manage remote-access login (needs [remote])")
+        stub.add_argument("action", nargs="?")
+        return
+    auth_cli.add_parser(commands)
+
+
+def _run_auth(args: argparse.Namespace) -> int:
+    try:
+        from mcp_owner_auth import cli as auth_cli
+    except ImportError:
+        print(REMOTE_HINT, file=sys.stderr)
+        return 2
+    return auth_cli.run(
+        args.action,
+        auth_db=state_dir() / "auth.db",
+        app_name=APP_NAME,
+        command="lamarzocco-mcp",
+        force=args.force,
+        redirect_uris=args.redirect_uri,
+    )
+
+
+def _serve_http(host: str, port: int) -> None:
+    try:
+        from mcp_owner_auth import ConfigError, serve
+    except ImportError:
+        print(REMOTE_HINT, file=sys.stderr)
+        sys.exit(2)
+    if ALLOW_WRITE and os.environ.get(ALLOW_REMOTE_WRITE_ENV, "").strip() != "1":
+        print(
+            f"Refusing to serve write tools remotely. Unset {write_tools.ALLOW_WRITE_ENV}, or "
+            f"also set {ALLOW_REMOTE_WRITE_ENV}=1 if you really want that.",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    logging.basicConfig(level=logging.INFO, stream=sys.stderr)
+    try:
+        config = auth_config()
+        load_credentials()  # fail at startup, not on the first tool call
+        print(f"Serving {config.resource} on {host}:{port} ({config.auth_mode})", file=sys.stderr)
+        serve(server, config, host=host, port=port)
+    except (ConfigError, CredentialsMissingError, OSError, ValueError) as err:
+        print(f"Cannot start: {err}", file=sys.stderr)
+        sys.exit(2)
+
+
 def main(argv: list[str] | None = None) -> None:
     """Entry point for the ``lamarzocco-mcp`` console script.
 
     Without arguments it runs the MCP server over stdio (what MCP clients start). ``setup``
-    stores the La Marzocco login in the keyring.
+    stores the La Marzocco login in the keyring. ``serve --http`` serves Streamable HTTP behind
+    single-user OAuth (needs the ``remote`` extra); ``auth`` manages that login.
     """
     parser = argparse.ArgumentParser(
         prog="lamarzocco-mcp",
@@ -214,10 +295,20 @@ def main(argv: list[str] | None = None) -> None:
     commands = parser.add_subparsers(dest="command")
     setup = commands.add_parser("setup", help="store your La Marzocco login in the keyring")
     setup.add_argument("--delete", action="store_true", help="remove the stored login instead")
+    serve = commands.add_parser("serve", help="run the MCP server (stdio unless --http)")
+    serve.add_argument("--http", action="store_true", help="Streamable HTTP with OAuth")
+    serve.add_argument("--host", default="127.0.0.1", help="bind address (default 127.0.0.1)")
+    serve.add_argument("--port", type=int, default=8000, help="port (default 8000)")
+    _add_auth_parser(commands)
     args = parser.parse_args(argv)
 
     if args.command == "setup":
         sys.exit(run_setup(delete=args.delete))
+    if args.command == "auth":
+        sys.exit(_run_auth(args))
+    if args.command == "serve" and args.http:
+        _serve_http(args.host, args.port)
+        return
     server.run("stdio")
 
 

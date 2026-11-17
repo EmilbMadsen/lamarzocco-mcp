@@ -25,6 +25,10 @@ dependencies = [
     "python-dotenv>=1.2.4",
 ]
 
+[project.optional-dependencies]
+# Streamable HTTP + single-user OAuth for use from claude.ai (`lamarzocco-mcp serve --http`)
+remote = ["mcp-owner-auth>=0.1.1"]
+
 [project.urls]
 Homepage = "https://github.com/EmilbMadsen/lamarzocco-mcp"
 Issues = "https://github.com/EmilbMadsen/lamarzocco-mcp/issues"
@@ -39,6 +43,8 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "httpx>=0.28",
+    "mcp-owner-auth>=0.1.1",
     "mypy>=2.4.1",
     "pytest>=9.2.0",
     "pytest-asyncio>=1.5.0",
@@ -65,3 +71,8 @@ ignore_missing_imports = true
 testpaths = ["tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
+
+[tool.uv.sources]
+# Until mcp-owner-auth 0.1.1 is on PyPI. Only affects uv; the published metadata is the plain
+# requirement above.
+mcp-owner-auth = { git = "https://github.com/EmilbMadsen/mcp-owner-auth", rev = "72e3ddc" }
