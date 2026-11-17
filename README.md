@@ -122,13 +122,35 @@ In Claude Code: `claude mcp add --scope user -e LAMARZOCCO_MCP_ALLOW_WRITE=1 lam
 |---|---|
 | `LAMARZOCCO_MCP_ALLOW_WRITE=1` | Registers the write tools |
 | `LAMARZOCCO_SERIAL` | Use this machine instead of the one chosen in `setup` |
+| `LAMARZOCCO_CREDENTIALS_FILE` | JSON file with `username`, `password`, `installation_key` (and optionally `serial_number`) instead of the keyring, e.g. a Docker secret |
 
 With several machines on the account, tools also take an optional `serial_number`.
 
+## Remote access (optional)
+
+`pip install 'lamarzocco-mcp[remote]'` adds `lamarzocco-mcp serve --http`: Streamable HTTP at
+`/mcp` behind single-user OAuth 2.1 (password + TOTP, PKCE, short-lived rotating tokens) from
+[mcp-owner-auth](https://github.com/EmilbMadsen/mcp-owner-auth), so the server can be added as a
+custom connector in claude.ai and used from the Claude mobile app. Self-hosted and single-user
+only. A `Dockerfile` is included.
+
+| Variable / command | Effect |
+|---|---|
+| `LAMARZOCCO_MCP_PUBLIC_URL` | public base URL, e.g. `https://lamarzocco.example.com` |
+| `LAMARZOCCO_MCP_STATE_DIR` | where `auth.db` and the audit log live (default `~/.config/lamarzocco-mcp`) |
+| `LAMARZOCCO_MCP_CLIENT_IP_HEADER` | e.g. `CF-Connecting-IP` behind a Cloudflare Tunnel |
+| `lamarzocco-mcp auth init` | username, password and TOTP; prints the OAuth client ID and secret once |
+| `lamarzocco-mcp auth revoke-all` | revokes every token immediately |
+
+Remote access is **read-only**: `serve --http` refuses to start with
+`LAMARZOCCO_MCP_ALLOW_WRITE=1` unless `LAMARZOCCO_MCP_ALLOW_REMOTE_WRITE=1` is also set.
+
 ## Security
 
-- Your login and installation key are stored only in the system keyring.
-- The server runs only locally over stdio; there is no network listener.
+- Your login and installation key are stored only in the system keyring (or, for a server, in
+  the file `LAMARZOCCO_CREDENTIALS_FILE` points to).
+- By default the server runs only locally over stdio; there is no network listener. Remote
+  access is opt-in (see above).
 - Read-only unless you enable write tools.
 - The server uses La Marzocco's undocumented cloud API through pylamarzocco, the same API their
   app uses. It can stop working if La Marzocco changes it.
