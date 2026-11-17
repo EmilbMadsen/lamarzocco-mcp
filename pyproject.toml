@@ -71,8 +71,3 @@ ignore_missing_imports = true
 testpaths = ["tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
-
-[tool.uv.sources]
-# Until mcp-owner-auth 0.1.1 is on PyPI. Only affects uv; the published metadata is the plain
-# requirement above.
-mcp-owner-auth = { git = "https://github.com/EmilbMadsen/mcp-owner-auth", rev = "72e3ddc" }
